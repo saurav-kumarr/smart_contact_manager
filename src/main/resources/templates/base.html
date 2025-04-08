@@ -1,23 +1,41 @@
 <!DOCTYPE html>
-<html lang="en" th:fragment="parent(content,title)" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" th:fragment="parent(content,title,script)"
+	xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-th-replace="${title}">SCM</title>
-    <link data-th-href="@{'C:\Users\csaur\Documents\Java_Workspace\SpringBoot_Project\scm\src\main\resources\static\css\output.css'}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.css" integrity="sha512-Lnb4rmvlf0eGfqcEGPKkjoZPXBQFsZu3yl47cwfJxCQp7MlfqIKrS+2eYEimTX8PWh4h5P8JAQbzX78q4gIRDQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-th-replace="${title}">SCM</title>
+<link data-th-href="@{'/css/output.css'}" rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.css"
+	integrity="sha512-Lnb4rmvlf0eGfqcEGPKkjoZPXBQFsZu3yl47cwfJxCQp7MlfqIKrS+2eYEimTX8PWh4h5P8JAQbzX78q4gIRDQ=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <!-- Your content goes here -->
-    Base page Content!
-    <!-- main content -->
-    <section data-th-replace="${content}"></section>
+	<!-- Your content goes here -->
+	Base page Content!
+	<ul>
+		<li><a data-th-href="@{'/home'}">Home</a></li>
+		<li><a data-th-href="@{'/services'}">Services</a></li>
+		<li><a data-th-href="@{'/about'}">About</a></li>
+	</ul>
+	<!-- main content -->
+	<div class="p-4">
+	<section data-th-replace="${content}"></section>
+	</div>
 	
-	
-	
-	
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js" integrity="sha512-Fx0qfamN0X4phfkgQkEWlTY63R375YIvgGFI1idvxR81h3MeaC63EsVWMbSwDnu0uk87YnvTH11ZVwHxSj+dwA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
+
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"
+		integrity="sha512-Fx0qfamN0X4phfkgQkEWlTY63R375YIvgGFI1idvxR81h3MeaC63EsVWMbSwDnu0uk87YnvTH11ZVwHxSj+dwA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<th:block data-th-replace="${script}"></th:block>
+
 </body>
 </html>
 
