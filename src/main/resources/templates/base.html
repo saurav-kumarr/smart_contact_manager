@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" th:fragment="parent(content,title,script)"
-	xmlns:th="http://www.thymeleaf.org">
+<html class="dark"
+lang="en" th:fragment="parent(content,title,script)"
+xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +11,12 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.css"
 	integrity="sha512-Lnb4rmvlf0eGfqcEGPKkjoZPXBQFsZu3yl47cwfJxCQp7MlfqIKrS+2eYEimTX8PWh4h5P8JAQbzX78q4gIRDQ=="
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
+	
+	<!-- Font Awesome Link -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	
 </head>
-<body>
+<body class = "dark:bg-gray-900 dark:text-white">
 	<!-- Your content goes here -->
 	<div data-th-replace="navbar :: navbar"></div>
 	
@@ -30,6 +35,8 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"
 		integrity="sha512-Fx0qfamN0X4phfkgQkEWlTY63R375YIvgGFI1idvxR81h3MeaC63EsVWMbSwDnu0uk87YnvTH11ZVwHxSj+dwA=="
 		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		
+	<script data-th-src="@{'/javascript/script.js'}"></script>
 
 	<th:block data-th-replace="${script}"></th:block>
 
