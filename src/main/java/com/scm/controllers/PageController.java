@@ -1,7 +1,15 @@
 package com.scm.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.scm.forms.UserForm;
+
+import ch.qos.logback.core.joran.spi.HttpUtil.RequestMethod;
+
 
 @Controller
 public class PageController {
@@ -43,9 +51,25 @@ public class PageController {
 
 	// SignUp Page
 	@GetMapping("/signup")
-	public String signup() {
+	public String signup(Model model) {
+		
 		System.out.println("signup page loading");
-		return new String("register");
+		UserForm userForm = new UserForm();
+		model.addAttribute("userForm", userForm);
+		return "register";
+	}
+	
+	//Processing register
+	@PostMapping("/do-register")
+	public String processRegister(@ModelAttribute UserForm userForm) {
+		System.out.println("processing registration");
+		System.out.println(userForm);
+		// fetch form data
+		// validation form data
+		// save to database
+		// message ="Registration Successful"
+		// redirect to login page
+		return "redirect:/signup";
 	}
 
 }
