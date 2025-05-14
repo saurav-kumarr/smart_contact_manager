@@ -3,15 +3,20 @@ package com.scm.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.scm.entities.User;
 import com.scm.forms.UserForm;
+import com.scm.helpers.Message;
+import com.scm.helpers.MessageType;
 import com.scm.services.UserService;
 
 import ch.qos.logback.core.joran.spi.HttpUtil.RequestMethod;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 
 @Controller
@@ -67,11 +72,16 @@ public class PageController {
 	
 	//Processing register
 	@PostMapping("/do-register")
-	public String processRegister(@ModelAttribute UserForm userForm) {
+	public String processRegister(@Valid @ModelAttribute UserForm userForm,BindingResult rBindingResult, HttpSession session) {
 		System.out.println("processing registration");
 		System.out.println(userForm);
 		// fetch form data
 		// validation form data
+		
+		if(rBindingResult.hasErrors()) {
+			return "register";
+		}
+		
 		// save to database
 		// message ="Registration Successful"
 		// redirect to login page
@@ -98,6 +108,12 @@ public class PageController {
 		
 		User savedUser = userService.saveUser(user);
 		System.out.println("User Saved :");
+		
+		//add the message
+		
+		Message message = Message.builder().setContent("Registration Successful").setType(MessageType.green).build();
+		
+		session.setAttribute("message", message);
 		
 		return "redirect:/signup";
 	}
