@@ -1,26 +1,15 @@
 package com.scm.config;
 
-import java.io.IOException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-
 import com.scm.services.impl.SecurityCustomUserDetailService;
-
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration
 public class SecurityConfig {
@@ -50,6 +39,8 @@ public class SecurityConfig {
 	@Autowired
 	public SecurityCustomUserDetailService userDetailService;
 	
+	//configuration of authentication provider for spring security
+	
 	@Bean
 	DaoAuthenticationProvider authenticationProvider() {
 		
@@ -65,22 +56,27 @@ public class SecurityConfig {
 	}
 	
 	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+    SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		
 		//urls configure kiya hai ki koun se public rangenge aur kon se private rahenge
 		httpSecurity.authorizeHttpRequests(authorize ->{
 			//authorize.requestMatchers("/home","/signup","/services").permitAll();
 			authorize.requestMatchers("/user/**").authenticated();
 			authorize.anyRequest().permitAll();
+		
 		});
+		
 		
 		//form default login
 		//agar hame kuch bhi change
+		
 		httpSecurity.formLogin(formLogin -> {
 			
 			formLogin.loginPage("/login");
+			System.out.println("before error");
 			formLogin.loginProcessingUrl("/authenticate");
-			formLogin.successForwardUrl("/user/dashboard");
+			System.out.println("after error");
+			formLogin.defaultSuccessUrl("/user/dashboard",true);
 			formLogin.failureForwardUrl("/login?error=true");
 			// formLogin.defaultSuccessUrl("/home");
 			formLogin.usernameParameter("email");
@@ -106,6 +102,12 @@ public class SecurityConfig {
 //			});
 			
 			
+		});
+		
+		httpSecurity.csrf(AbstractHttpConfigurer::disable);
+		httpSecurity.logout(logoutForm->{
+			logoutForm.logoutUrl("/logout");
+			logoutForm.logoutSuccessUrl("/login?logout=true");
 		});
 		
 		return httpSecurity.build();
