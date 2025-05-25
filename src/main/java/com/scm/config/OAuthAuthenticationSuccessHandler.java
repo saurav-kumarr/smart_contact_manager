@@ -39,6 +39,20 @@ public class OAuthAuthenticationSuccessHandler implements AuthenticationSuccessH
 		
 		logger.info("OAuthAuthenticatioSuccessHandler");
 		
+		
+		//Google 
+		//Google Attributes
+		
+		
+		//Github
+		//Github Attributes
+		
+		
+		//Facebook
+		
+		
+		/*
+		
 		DefaultOAuth2User user = (DefaultOAuth2User) authentication.getPrincipal();
 		
 //		logger.info(user.getName());
@@ -77,6 +91,8 @@ public class OAuthAuthenticationSuccessHandler implements AuthenticationSuccessH
 			userRepo.save(user1);
 			logger.info("User saved: "+email);
 		}
+		
+		*/
 		
 		new DefaultRedirectStrategy().sendRedirect(request, response,"/user/profile" );
 		
