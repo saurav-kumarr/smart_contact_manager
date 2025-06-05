@@ -113,7 +113,7 @@ public class PageController {
 		
 		
 		User savedUser = userService.saveUser(user);
-		System.out.println("User Saved :");
+		System.out.println("User Saved :"+ savedUser);
 		
 		//add the message
 		
