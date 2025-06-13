@@ -19,7 +19,22 @@ xmlns:th="http://www.thymeleaf.org">
 </head>
 <body class = "dark:bg-gray-900 bg-gray-100 dark:text-white">
 	<!-- Your content goes here -->
+	
+	<!-- Common header -->
+	
+	<!-- If user is logged in : navbar -->
+	<div th:if="${loggedInUser}">
+	<div data-th-replace="~{user/user_navbar :: user-navbar}"></div>
+	</div>
+	
+	
+	
+	
+	<!-- user is not logged : navbar -->
+	<div th:unless="${loggedInUser}">
 	<div data-th-replace="~{navbar :: navbar}"></div>
+	</div>
+	
 	
 	<!-- main content -->
 	<div class="p-4">

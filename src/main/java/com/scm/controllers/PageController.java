@@ -32,9 +32,13 @@ public class PageController {
 	}
 
 	@GetMapping("/home")
-	public String home() {
+	public String home(Model model) {
 
 		System.out.println("Home page handler");
+		// sending data to view
+		model.addAttribute("name","Substring Technologies");
+		model.addAttribute("youtubeChannel","Learn Code with Durgesh");
+		model.addAttribute("githubRepo","https://github.com/learncode");
 		return "home";
 	}
 

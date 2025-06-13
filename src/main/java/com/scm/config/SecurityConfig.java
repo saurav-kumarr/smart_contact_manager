@@ -106,10 +106,7 @@ public class SecurityConfig {
 		});
 		
 		httpSecurity.csrf(AbstractHttpConfigurer::disable);
-		httpSecurity.logout(logoutForm->{
-			logoutForm.logoutUrl("/logout");
-			logoutForm.logoutSuccessUrl("/login?logout=true");
-		});
+		
 		
 		//Oauth configurations
 		httpSecurity.oauth2Login(oauth -> {
@@ -117,6 +114,11 @@ public class SecurityConfig {
 			oauth.successHandler(handler);
 		});
 		//httpSecurity.oauth2Login(Customizer.withDefaults());
+		
+		httpSecurity.logout(logoutForm->{
+			logoutForm.logoutUrl("/logout");
+			logoutForm.logoutSuccessUrl("/login?logout=true");
+		});
 		
 		return httpSecurity.build();
 	}
