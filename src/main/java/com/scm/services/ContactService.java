@@ -2,7 +2,6 @@ package com.scm.services;
 
 import java.util.List;
 
-
 import com.scm.entities.Contact;
 
 public interface ContactService {

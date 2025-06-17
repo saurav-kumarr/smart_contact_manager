@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.scm.entities.Contact;
 import com.scm.helpers.ResourceNotFoundException;
 import com.scm.repositories.ContactRepo;
 import com.scm.services.ContactService;
 
+@Service
 public class ContactServiceImpl implements ContactService {
 	
 	@Autowired
