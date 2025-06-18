@@ -35,8 +35,9 @@ public class ContactForm {
 	private boolean favorite;
 	private String websiteLink;
 	private String linkedInLink;
-
-	private MultipartFile profileImage;
+    
+	//annotation create karenge jo file ko validate karega size,resolution aur type se.
 	
+	private MultipartFile contactImage;
 	
 }
