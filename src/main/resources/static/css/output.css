@@ -255,6 +255,9 @@
   .col-span-12 {
     grid-column: span 12 / span 12;
   }
+  .m-3 {
+    margin: calc(var(--spacing) * 3);
+  }
   .mx-auto {
     margin-inline: auto;
   }
@@ -353,6 +356,9 @@
   }
   .h-screen {
     height: 100vh;
+  }
+  .max-h-52 {
+    max-height: calc(var(--spacing) * 52);
   }
   .w-1\/2 {
     width: calc(1/2 * 100%);
@@ -642,6 +648,10 @@
   }
   .text-white {
     color: var(--color-white);
+  }
+  .shadow {
+    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
   .shadow-md {
     --tw-shadow: 0 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1));

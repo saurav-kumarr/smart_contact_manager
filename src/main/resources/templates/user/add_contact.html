@@ -206,7 +206,10 @@
 							<!-- Contact image field -->
 							<div class="mb-3">
                             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload Contact Image</label>
-                            <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" data-th-field="*{contactImage}" type="file">
+                            <input id="image_file_input" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" data-th-field="*{contactImage}" type="file">
+                            
+                            <img class="max-h-52 mx-auto rounded-lg shadow m-3" alt="" id="upload_image_preview" src="">
+                            
 				            </div>			
 							
 							<!-- Favorite contact checkbox-->
@@ -229,19 +232,14 @@
 
 
 
-				
-
-
-
-
-
 				</div>
 
 			</div>
 		</div>
 
 	</div>
-
+	
+    <script data-th-src="@{'/javascript/admin.js'}"></script>
 
 	<script>
    console.log("This is profile page");

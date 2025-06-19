@@ -1,7 +1,7 @@
 package com.scm.controllers;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -29,7 +29,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/user/contacts")
 public class ContactController {
 	
-	private Logger logger = LoggerFactory.getLogger(ContactController.class);
+	//private Logger logger = LoggerFactory.getLogger(ContactController.class);
 	
 	@Autowired
 	private ContactService contactService;
@@ -73,8 +73,9 @@ public class ContactController {
 		//form --> contact
 		User user = userService.getUserByEmail(username);
 		
+		String filename = UUID.randomUUID().toString();
 		//2process the contact picture code 
-		String fileURL = imageService.uploadImage(contactForm.getContactImage());
+		String fileURL = imageService.uploadImage(contactForm.getContactImage(),filename);
 		
 		Contact contact = new Contact();
 		
@@ -88,10 +89,10 @@ public class ContactController {
 		contact.setLinkedInLink(contactForm.getLinkedInLink());
 		contact.setWebsiteLink(contactForm.getWebsiteLink());
 		contact.setPicture(fileURL);
+		contact.setCloudinaryImagePublicId(filename);
 		
 		
-		
-		//contactService.save(contact);
+		contactService.save(contact);
 		
 		System.out.println(contactForm);
 		//3set the contact picture url
