@@ -1,5 +1,6 @@
 package com.scm.controllers;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,6 +104,23 @@ public class ContactController {
 		session.setAttribute("message", Message.builder().setContent("You have successfully added a new contact").setType(MessageType.green).build());
 		return "redirect:/user/contacts/add";
 		
+	}
+	
+	
+	//View Contact
+	@GetMapping
+	public String viewContacts(Model model,Authentication authentication) {
+		
+		String username = Helper.getEmailOfLoggedInUser(authentication);
+		
+		User userByEmail = userService.getUserByEmail(username);
+		
+		//load all the user contacts
+		List<Contact> contacts = contactService.getByUser(userByEmail);
+		
+		model.addAttribute("contacts", contacts);
+		
+		return "user/contacts";
 	}
 
 }
