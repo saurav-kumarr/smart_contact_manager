@@ -2,26 +2,23 @@
 <html lang="en"
 	th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}">
 <head>
-<title>All Your Contacts</title>
+<!-- data-th-text="${loggedInUser.name}+' | Dashboard'" -->
+<title >Search Contacts</title>
 </head>
 <body>
 
 	<div id="content">
-	
-	
 		<!-- user is logged in : sidebar -->
 		<div th:if="${loggedInUser}">
 			<div data-th-replace="~{user/sidebar :: sidebar}"></div>
 		</div>
-		
 
-		<div class=" sm:pl-64 pt-15">
-			<div class="">
-				<h1 class="text-5xl text-center">All Your Contacts</h1>
-				<p class="text-center">List of all contacts...</p>
-				
-				
-				<div class="contacts_container p-5">
+		<div class=" sm:pl-64 pt-15" style="height: 1000px">
+			<div class="flex justify-center flex-col items-center">
+				<h1>Search Results</h1>
+			</div>
+			
+			<div class="contacts_container p-5">
 				
 				
 
@@ -35,7 +32,7 @@
       <div>
   <select data-th-field="*{field}"
    id="countries_disabled" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-    <option selected value="">Sort By</option>
+    <option selected value = "">Sort By</option>
     <option value="name">Name</option>
     <option value="phone">Phone</option>
     <option value="email">Email</option>
@@ -162,18 +159,13 @@
 				
 				
 				</div>
-				
-				
-				
-				
-				 </div>
-           </div>
+
+		</div>
 	</div>
 
-	
-	
 	<script>
    console.log("This is profile page");
    </script>
+
 </body>
 </html>
