@@ -154,7 +154,35 @@ public class ContactController {
 		var user = userService.getUserByEmail(Helper.getEmailOfLoggedInUser(authentication));
 		
 		
+	    String field = contactSearchForm.getField();
+	    String value = contactSearchForm.getValue();
+
+	    // 🛑 Case 3: Field and value both empty → stay on the same page
+	    if ((field == null || field.isBlank()) && (value == null || value.isBlank())) {
+	        model.addAttribute("contactSearchForm", contactSearchForm);
+	        model.addAttribute("pageContacts", Page.empty());
+	        model.addAttribute("pageSize", AppConstants.PAGE_SIZE);
+	        return "user/search";
+	    }
+
+	    // ✅ Case 2: Value entered, field not selected → default to "name"
+	    if ((field == null || field.isBlank()) && (value != null && !value.isBlank())) {
+	        contactSearchForm.setField("name");
+	        field = "name";
+	    }
+
+	    // 🛑 Case 1: Field selected, value empty → stay on the same page
+	    if ((field != null && !field.isBlank()) && (value == null || value.isBlank())) {
+	        model.addAttribute("contactSearchForm", contactSearchForm);
+	        model.addAttribute("pageContacts", Page.empty());
+	        model.addAttribute("pageSize", AppConstants.PAGE_SIZE);
+	        return "user/search";
+	    }
+
+
+		
 		Page<Contact> pageContacts = null;
+		
 		if(contactSearchForm.getField().equalsIgnoreCase("name")) {
 			pageContacts = contactService.searchByName(contactSearchForm.getValue(), size, page, sortBy, direction,user);
 			

@@ -15,7 +15,8 @@
 
 		<div class=" sm:pl-64 pt-15" style="height: 1000px">
 			<div class="flex justify-center flex-col items-center">
-				<h1>Search Results</h1>
+				<h1 class="font-semibold text-2xl">Search Results</h1>
+				<p data-th-text="${pageContacts.totalElements}+' results found'"></p>
 			</div>
 			
 			<div class="contacts_container p-5">
@@ -23,16 +24,18 @@
 				
 
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-   <form data-th-object="${contactSearchForm}"
+   <form id="contact-search-form"
+   data-th-object="${contactSearchForm}"
    data-th-action="@{'/user/contacts/search'}" >
    
     <div class="flex space-x-3 p-5 items-center justify-start flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
       
       <!-- Select Box -->
       <div>
-  <select data-th-field="*{field}"
+  <select 
+  data-th-field="*{field}"
    id="countries_disabled" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-    <option selected value = "">Sort By</option>
+    <option selected disabled value = "">Sort By</option>
     <option value="name">Name</option>
     <option value="phone">Phone</option>
     <option value="email">Email</option>
@@ -48,7 +51,7 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                 </svg>
             </div>
-            <input data-th-field="*{value}"
+            <input  data-th-field="*{value}"
              type="text" id="table-search-users" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for users">
         </div>
         
@@ -57,7 +60,11 @@
     </div>
    
    </form>
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+   
+   <div id="search-message" class="hidden mt-2 p-2 text-red-700 bg-red-100 rounded text-sm"></div>
+   
+    <table data-th-if = "${pageContacts.totalElements>0}"
+    class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 
@@ -116,9 +123,10 @@
                     <a>
                     <i class="fa-solid w-6 h-6 fa-pen"></i>
                     </a>
-                    <a>
+                    <button th:data-id="${c.id}"
+                    th:onclick="loadContactdata(this.getAttribute('data-id'))">
                      <i class="fa-solid w-6 h-6 fa-eye"></i>
-                    </a>
+                    </button>
                    
                     </div>
                 </td>
@@ -129,17 +137,18 @@
     </table>
     
     <!-- Pagination Component-->
-    <div class="pagination_container bg-white dark:bg-gray-800 p-5 text-center">
+    <div data-th-if = "${pageContacts.totalElements>0}"
+    class="pagination_container bg-white dark:bg-gray-800 p-5 text-center">
     
     <nav aria-label="Page navigation example">
   <ul class="inline-flex -space-x-px text-sm">
     <li data-th-unless="${pageContacts.first}">
-      <a data-th-href="@{'/user/contacts?size='+${pageSize}+'&page='+${pageContacts.number-1}}" 
+      <a data-th-href="@{'/user/contacts/search?size='+${pageSize}+'&page='+${pageContacts.number-1}+'&field='+${contactSearchForm.field}+'&value='+${contactSearchForm.value}}" 
       class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
     </li>
     <li data-th-each="index : ${#numbers.sequence(0,pageContacts?.totalPages-1)}">
       <a 
-       data-th-href="@{'/user/contacts?size='+${pageSize}+'&page='+${index}}" 
+       data-th-href="@{'/user/contacts/search?size='+${pageSize}+'&page='+${index}+'&field='+${contactSearchForm.field}+'&value='+${contactSearchForm.value}}" 
        data-th-classappend="${index==pageContacts.number? 'bg-blue-50 dark:bg-gray-600' : 'bg-white dark:bg-gray-800'}"
        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
        <span data-th-text="${index+1}"></span>
@@ -147,7 +156,7 @@
     </li>
    
     <li data-th-unless="${pageContacts.last}">
-      <a  data-th-href="@{'/user/contacts?size='+${pageSize}+'&page='+${pageContacts.number+1}}" 
+      <a  data-th-href="@{'/user/contacts/search?size='+${pageSize}+'&page='+${pageContacts.number+1}+'&field='+${contactSearchForm.field}+'&value='+${contactSearchForm.value}}" 
       class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
     </li>
   </ul>
@@ -155,17 +164,57 @@
     
     </div>
     
+    <h1 class="text-5xl text-center text-black dark:text-white p-4"
+    data-th-if = "${pageContacts.totalElements<=0}"
+    >No result found!</h1>
+    
 </div>
-				
 				
 				</div>
 
+               <div data-th-replace="~{user/contact_modals :: contact}"></div>
+
 		</div>
 	</div>
+	
+	<script data-th-src="@{/javascript/contacts.js}"></script>
 
 	<script>
+	 document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("contact-search-form");
+    const messageBox = document.getElementById("search-message");
+
+    form.addEventListener("submit", function (e) {
+      const field = form.querySelector('[name="field"]').value.trim();
+      const value = form.querySelector('[name="value"]').value.trim();
+
+      // Reset previous message
+      messageBox.classList.add("hidden");
+      messageBox.textContent = "";
+
+      // Case 3 or Case 1: prevent submission and show message
+      if ((field && !value) || (!field && !value)) {
+        e.preventDefault();
+
+        messageBox.textContent = field && !value
+          ? "You must enter a search value."
+          : "Please select a field or enter a value to search.";
+
+        messageBox.classList.remove("hidden");
+
+        // Optional: fade out after 5 seconds
+        setTimeout(() => {
+          messageBox.classList.add("hidden");
+        }, 5000);
+      }
+    });
+  });
+
+	
    console.log("This is profile page");
+   
    </script>
+   
 
 </body>
 </html>
