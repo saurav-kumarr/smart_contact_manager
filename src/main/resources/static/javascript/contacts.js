@@ -1,5 +1,7 @@
 console.log("contact_view_modal");
 
+const baseURL = "http://localhost:8080";
+
 const viewContactModal = document.getElementById("view_contact_modal");
 
 // options with default values
@@ -44,7 +46,7 @@ async function loadContactdata(id){
 	console.log(id);
 	try{
 		
-		const data = await ( await fetch(`http://localhost:8080/api/contacts/${id}`)).json();
+		const data = await ( await fetch(`${baseURL}/api/contacts/${id}`)).json();
 		console.log(data);
 		document.querySelector("#contact_name").innerHTML = data.name;
 		document.querySelector("#contact_email").innerHTML = data.email;
@@ -70,6 +72,24 @@ async function loadContactdata(id){
 	} catch (error) {
 		console.log("Error: ",error);
 	}
-	
-	
+}
+
+
+//Delete javascript
+async function deleteContact(id) {
+	Swal.fire({
+	  title: "Do you want to delete the contact?",
+	  icon: "warning",
+	  showCancelButton: true,
+	  confirmButtonText: "Delete",
+	  
+	}).then((result) => {
+	  /* Read more about isConfirmed, isDenied below */
+	  if (result.isConfirmed) {
+		
+		const url = `${baseURL}/user/contacts/delete/` + id;
+		        window.location.replace(url);
+		
+	  }
+	});
 }

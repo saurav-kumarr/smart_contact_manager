@@ -8,6 +8,7 @@ xmlns:th="http://www.thymeleaf.org">
 <title data-th-replace="${title}">SCM</title>
 <link data-th-href="@{'/css/output.css'}" rel="stylesheet">
 <link data-th-href="@{'/css/style.css'}" rel="stylesheet">
+<link data-th-href="@{'/css/sweetAlert2.css'}" rel="stylesheet">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.css"
 	integrity="sha512-Lnb4rmvlf0eGfqcEGPKkjoZPXBQFsZu3yl47cwfJxCQp7MlfqIKrS+2eYEimTX8PWh4h5P8JAQbzX78q4gIRDQ=="
@@ -15,6 +16,8 @@ xmlns:th="http://www.thymeleaf.org">
 	
 	<!-- Font Awesome Link -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	
+	
 	
 </head>
 <body class = "dark:bg-gray-900 bg-gray-100 dark:text-white">
@@ -51,10 +54,13 @@ xmlns:th="http://www.thymeleaf.org">
 		src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.5.2/flowbite.min.js"
 		integrity="sha512-Fx0qfamN0X4phfkgQkEWlTY63R375YIvgGFI1idvxR81h3MeaC63EsVWMbSwDnu0uk87YnvTH11ZVwHxSj+dwA=="
 		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-		
-	<script data-th-src="@{'/javascript/script.js'}"></script>
+	
 
-	<th:block data-th-replace="${script}"></th:block>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+		
+		<script data-th-src="@{'/javascript/script.js'}"></script>
+
+	  <th:block data-th-replace="${script}"></th:block>
 
 </body>
 </html>
